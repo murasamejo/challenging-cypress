@@ -40,7 +40,6 @@ jobs:
       - run:
           name: Install Dependencies
           command: yarn install
-      # - run: npm run cy:verify
 
       # save npm dependencies and Cypress binary for future runs
       - save_cache:
@@ -50,6 +49,17 @@ jobs:
             - ~/.npm
             - ~/.cache
 
+      # Show Cypress Information
+      - run:
+          name: Prints information about Cypress and the current environment
+          command: yarn cy:info
+      - run:
+          name: Verify that Cypress is installed correctly and is executable
+          command: yarn cy:verify
+      - run:
+          name: Prints the installed Cypress binary version, the Cypress package version, the version of Electron used to build Cypress, and the bundled Node version
+          command: yarn cy:version
+
       # https://circleci.com/docs/ja/2.0/configuration-reference/
       # background 属性を使用すると、コマンドをバックグラウンドで実行するように構成できます。 background 属性を true に設定した場合、コマンドの終了を待つことなく、ジョブの実行が直ちに次のステップに進みます。
       # start server before starting tests
@@ -58,6 +68,7 @@ jobs:
       #     background: true
       # - run: npm run e2e:record
       - run:
+          name: Run Cypress Test
           command: yarn cy:run
           # background: true
 
