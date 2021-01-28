@@ -1,3 +1,6 @@
+.envrc
+cypress/videos/
+
 # Logs
 logs
 *.log
