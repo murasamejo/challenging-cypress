@@ -1,7 +1,15 @@
 # Challenging Cypress
 
 ## ドキュメント
+
+### CLI
 - [Command Line | Cypress Documentation](https://docs.cypress.io/guides/guides/command-line.html#Installation)
+
+### cypress.json
+- [Configuration | Cypress Documentation](https://docs.cypress.io/guides/references/configuration.html#Options)
+
+### 環境変数
+- [Environment Variables | Cypress Documentation](https://docs.cypress.io/guides/guides/environment-variables.html#Setting)
 
 ## ディレクトリ構成例
 - https://gist.github.com/alfredlucero/53783a6847cede23ccd8d762d4692d3e より。
