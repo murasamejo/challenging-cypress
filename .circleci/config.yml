@@ -47,9 +47,11 @@ jobs:
           key: cache-{{ checksum "package.json" }}
           paths:
             - ~/node_modules
-            # - ~/.npm
-            # - ~/.cache
+            - ~/.npm
+            - ~/.cache
 
+      # https://circleci.com/docs/ja/2.0/configuration-reference/
+      # background 属性を使用すると、コマンドをバックグラウンドで実行するように構成できます。 background 属性を true に設定した場合、コマンドの終了を待つことなく、ジョブの実行が直ちに次のステップに進みます。
       # start server before starting tests
       # - run:
       #     command: npm run start:ci
