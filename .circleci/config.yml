@@ -1,0 +1,68 @@
+# https://github.com/cypress-io/cypress-example-kitchensink/blob/master/basic/.circleci/config.yml
+# https://github.com/cypress-io/cypress-example-kitchensink/blob/master/.circleci/config.yml
+
+version: 2
+jobs:
+  test:
+    docker:
+      - image: cypress/base:14.15.4
+    steps:
+      - checkout
+
+      - run:
+          name: Install System Dependencies
+          command: |
+            apt update
+            apt install -y gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget lsof
+      - run:
+          name: Google Noto Fonts のインストールを行う
+          command: |
+            apt update
+            apt install -y fonts-noto
+      - run:
+          name: Install Chrome
+          command: |
+            apt update
+            apt install -y libappindicator3-1
+            apt install -y libvulkan1 udev libudev1 libu2f-udev libgbm1 libwayland-server0
+            curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+            dpkg -i google-chrome.deb
+            sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
+            rm google-chrome.deb
+
+      # restore folders with npm dependencies and Cypress binary
+      - restore_cache:
+          keys:
+            - cache-{{ checksum "package.json" }}
+
+      # install npm dependencies and Cypress binary
+      # if they were cached, this step is super quick
+      - run:
+          name: Install Dependencies
+          command: yarn install
+      # - run: npm run cy:verify
+
+      # save npm dependencies and Cypress binary for future runs
+      - save_cache:
+          key: cache-{{ checksum "package.json" }}
+          paths:
+            - ~/node_modules
+            - ~/.npm
+            - ~/.cache
+
+      # https://circleci.com/docs/ja/2.0/configuration-reference/
+      # background 属性を使用すると、コマンドをバックグラウンドで実行するように構成できます。 background 属性を true に設定した場合、コマンドの終了を待つことなく、ジョブの実行が直ちに次のステップに進みます。
+      # start server before starting tests
+      # - run:
+      #     command: npm run start:ci
+      #     background: true
+      # - run: npm run e2e:record
+      - run:
+          command: yarn cy:run
+          # background: true
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - test
