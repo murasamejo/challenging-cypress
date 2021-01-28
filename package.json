@@ -3,6 +3,9 @@
     "cypress": "^6.3.0"
   },
   "scripts": {
-    "cy:run": "cypress run --browser chrome --headless --record --key $CYPRESS_RECORD_KEY"
+    "cy:run": "cypress run --browser chrome --headless --record --key $CYPRESS_RECORD_KEY",
+    "cy:verify": "cypress verify",
+    "cy:version": "cypress version",
+    "cy:info": "cypress info"
   }
 }
