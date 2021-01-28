@@ -3,6 +3,6 @@
     "cypress": "^6.3.0"
   },
   "scripts": {
-    "cy:run": "cypress run"
+    "cy:run": "cypress run --browser chrome --headless"
   }
 }
