@@ -5,7 +5,7 @@ version: 2
 jobs:
   test:
     docker:
-      - image: cypress/base:14.15.4
+      - image: cypress/base:14.17.0
     steps:
       - checkout
 
