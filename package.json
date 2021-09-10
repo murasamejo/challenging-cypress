@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "cypress": "^6.3.0"
+    "cypress": "8.3.1"
   },
   "scripts": {
     "cy:run": "cypress run --browser chrome --headless --record --key $CYPRESS_RECORD_KEY",
